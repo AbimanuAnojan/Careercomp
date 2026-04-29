@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Career Guidance</title>
+    <title>Career Guidance Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -9,34 +9,100 @@
 
 <header>
     <h1>Career Guidance Portal</h1>
-    <p>Find the best career path for you</p>
+    <p>Personalized career advice based on your level</p>
 </header>
 
-<section class="search">
-    <input type="text" id="careerInput" placeholder="Enter your interest (e.g. engineering, medicine)">
-    <button onclick="showCareer()">Search</button>
-</section>
+<div class="container">
 
-<section id="result"></section>
+    <!-- STEP 1 -->
+    <div id="step1">
+        <h2>Select Your Level</h2>
+        <select id="level">
+            <option value="">--Choose--</option>
+            <option value="10">10th</option>
+            <option value="11">11th</option>
+            <option value="12">12th</option>
+            <option value="ug">Undergraduate</option>
+            <option value="pg">Postgraduate</option>
+        </select>
+        <button onclick="nextStep()">Next</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" style="display:none;">
+        <h2 id="dynamicQuestion"></h2>
+        <input type="text" id="extraInput" placeholder="Type here...">
+        <button onclick="showResult()">Get Guidance</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result"></div>
+
+</div>
 
 <script>
-function showCareer() {
-    let input = document.getElementById("careerInput").value.toLowerCase();
-    let result = document.getElementById("result");
 
-    if (input.includes("engineering")) {
-        result.innerHTML = "<h2>Engineering</h2><p>Study PCM, clear JEE, join top colleges like IITs or NITs.</p>";
-    } 
-    else if (input.includes("medicine")) {
-        result.innerHTML = "<h2>Medicine</h2><p>Study PCB, clear NEET, pursue MBBS.</p>";
-    } 
-    else if (input.includes("commerce")) {
-        result.innerHTML = "<h2>Commerce</h2><p>Careers: CA, BBA, MBA, Finance.</p>";
-    } 
-    else {
-        result.innerHTML = "<p>No data found. Try engineering, medicine, or commerce.</p>";
+let selectedLevel = "";
+
+function nextStep() {
+    selectedLevel = document.getElementById("level").value;
+
+    if (selectedLevel === "") {
+        alert("Please select something");
+        return;
+    }
+
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+
+    if (selectedLevel === "10" || selectedLevel === "11" || selectedLevel === "12") {
+        document.getElementById("dynamicQuestion").innerText = "Which board are you studying in? (CBSE, ICSE, State Board)";
+    } else {
+        document.getElementById("dynamicQuestion").innerText = "Which college are you studying in?";
     }
 }
+
+function showResult() {
+    let input = document.getElementById("extraInput").value.toLowerCase();
+    let result = document.getElementById("result");
+
+    // SCHOOL LOGIC
+    if (selectedLevel === "10") {
+        result.innerHTML = "<h2>After 10th</h2><p>Choose stream: Science, Commerce, or Arts based on interest.</p>";
+    }
+
+    else if (selectedLevel === "11" || selectedLevel === "12") {
+
+        if (input.includes("cbse")) {
+            result.innerHTML = "<h2>CBSE Student</h2><p>Focus on NCERT strongly. Prepare for JEE / NEET.</p>";
+        } 
+        else if (input.includes("state")) {
+            result.innerHTML = "<h2>State Board Student</h2><p>Focus on board exams + extra coaching for competitive exams.</p>";
+        } 
+        else {
+            result.innerHTML = "<h2>General Advice</h2><p>Choose your career path based on your stream and interest.</p>";
+        }
+    }
+
+    // COLLEGE LOGIC
+    else if (selectedLevel === "ug") {
+
+        if (input.includes("iit")) {
+            result.innerHTML = "<h2>IIT Student</h2><p>Focus on internships, coding, and placements.</p>";
+        } 
+        else if (input.includes("arts")) {
+            result.innerHTML = "<h2>Arts College</h2><p>Explore UPSC, MBA, or specialization.</p>";
+        } 
+        else {
+            result.innerHTML = "<h2>UG Student</h2><p>Build skills, internships, and networking.</p>";
+        }
+    }
+
+    else if (selectedLevel === "pg") {
+        result.innerHTML = "<h2>Postgraduate</h2><p>Focus on specialization, research, or job placement.</p>";
+    }
+}
+
 </script>
 
 </body>
