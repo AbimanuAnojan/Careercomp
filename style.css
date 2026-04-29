@@ -1,4 +1,34 @@
 body {
-  font-family: Arial;
-  background: #0000FF;
+    font-family: Arial;
+    margin: 0;
+    background-color: #0f172a;
+    color: white;
+    text-align: center;
+}
+
+header {
+    background: #1e293b;
+    padding: 20px;
+}
+
+.search {
+    margin: 30px;
+}
+
+input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    padding: 10px 20px;
+    background: cyan;
+    border: none;
+    cursor: pointer;
+}
+
+#result {
+    margin-top: 20px;
 }
