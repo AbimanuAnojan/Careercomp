@@ -31,7 +31,11 @@
     <!-- STEP 2 -->
     <div id="step2" style="display:none;">
         <h2 id="dynamicQuestion"></h2>
-        <input type="text" id="extraInput" placeholder="Type here...">
+        <select id="extraInput">
+    <option value="cbse">CBSE</option>
+    <option value="icse">ICSE</option>
+    <option value="state">State Board</option>
+</select>
         <button onclick="showResult()">Get Guidance</button>
     </div>
 
@@ -63,26 +67,18 @@ function nextStep() {
 }
 
 function showResult() {
-    let input = document.getElementById("extraInput").value.toLowerCase();
+
+    let input = document.getElementById("extraInput").value;
     let result = document.getElementById("result");
 
-    // SCHOOL LOGIC
-    if (selectedLevel === "10") {
-        result.innerHTML = "<h2>After 10th</h2><p>Choose stream: Science, Commerce, or Arts based on interest.</p>";
-    }
+    const boards = {
+        cbse: "Focus on NCERT + JEE/NEET.",
+        icse: "Strong fundamentals, good for competitive exams.",
+        state: "Prepare for board + entrance exams."
+    };
 
-    else if (selectedLevel === "11" || selectedLevel === "12") {
-
-        if (input.includes("cbse")) {
-            result.innerHTML = "<h2>CBSE Student</h2><p>Focus on NCERT strongly. Prepare for JEE / NEET.</p>";
-        } 
-        else if (input.includes("state")) {
-            result.innerHTML = "<h2>State Board Student</h2><p>Focus on board exams + extra coaching for competitive exams.</p>";
-        } 
-        else {
-            result.innerHTML = "<h2>General Advice</h2><p>Choose your career path based on your stream and interest.</p>";
-        }
-    }
+    result.innerHTML = `<h2>${input.toUpperCase()}</h2><p>${boards[input]}</p>`;
+}
 
     // COLLEGE LOGIC
     else if (selectedLevel === "ug") {
