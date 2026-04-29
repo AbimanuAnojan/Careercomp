@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Career Guidance Pro</title>
+    <title>Career Guidance</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -9,60 +9,75 @@
 
 <header>
     <h1>Career Guidance Portal</h1>
-    <p>Personalized career advice based on your level</p>
 </header>
 
-<div class="container">
+<!-- STEP 1 -->
+<div id="step1">
+    <h2>Select Your Level</h2>
 
-    <!-- STEP 1 -->
-    <div id="step1">
-        <h2>Select Your Level</h2>
-        <select id="level">
-            <option value="">--Choose--</option>
-            <option value="10">10th</option>
-            <option value="11">11th</option>
-            <option value="12">12th</option>
-            <option value="ug">Undergraduate</option>
-            <option value="pg">Postgraduate</option>
-        </select>
-        <button onclick="nextStep()">Next</button>
-    </div>
+    <select id="level">
+        <option value="">--Choose--</option>
+        <option value="10">10th</option>
+        <option value="11">11th</option>
+        <option value="12">12th</option>
+        <option value="ug">UG</option>
+        <option value="pg">PG</option>
+    </select>
 
-    <!-- STEP 2 -->
-    <div id="step2" style="display:none;">
-        <h2 id="dynamicQuestion"></h2>
-        <select id="extraInput">
-    <option value="cbse">CBSE</option>
-    <option value="icse">ICSE</option>
-    <option value="state">State Board</option>
-</select>
-        <button onclick="showResult()">Get Guidance</button>
-    </div>
-
-    <!-- RESULT -->
-    <div id="result"></div>
-
+    <br><br>
+    <button onclick="nextStep()">Next</button>
 </div>
+
+<!-- STEP 2 -->
+<div id="step2" style="display:none;">
+    <h2 id="dynamicQuestion"></h2>
+
+    <!-- dropdown will change dynamically -->
+    <select id="extraInput"></select>
+
+    <br><br>
+    <button onclick="showResult()">Get Guidance</button>
+</div>
+
+<!-- RESULT -->
+<div id="result"></div>
 
 <script>
 
-let selectedLevel = "";
-
 function nextStep() {
-    selectedLevel = document.getElementById("level").value;
+    let level = document.getElementById("level").value;
 
-    if (selectedLevel === "") {
-        alert("Please select something");
+    if (level === "") {
+        alert("Please select your level");
         return;
     }
 
     document.getElementById("step1").style.display = "none";
     document.getElementById("step2").style.display = "block";
 
-    if (selectedLevel === "10" || selectedLevel === "11" || selectedLevel === "12") {
-        document.getElementById("dynamicQuestion").innerText = "Which board are you studying in?";
+    let dropdown = document.getElementById("extraInput");
+    dropdown.innerHTML = ""; // clear old options
+
+    if (level === "10" || level === "11" || level === "12") {
+
+        document.getElementById("dynamicQuestion").innerText = "Select your board";
+
+        dropdown.innerHTML = `
+            <option value="cbse">CBSE</option>
+            <option value="icse">ICSE</option>
+            <option value="state">State Board</option>
+        `;
+
     } else {
-        document.getElementById("dynamicQuestion").innerText = "Which college are you studying in?";
+
+        document.getElementById("dynamicQuestion").innerText = "Select your college";
+
+        dropdown.innerHTML = `
+            <option value="iit">IIT</option>
+            <option value="nit">NIT</option>
+            <option value="vit">VIT</option>
+            <option value="srm">SRM</option>
+        `;
     }
 }
 
@@ -70,33 +85,18 @@ function showResult() {
 
     let input = document.getElementById("extraInput").value;
     let result = document.getElementById("result");
-   // SCHOOL LOGIC
-    const boards = {
+
+    const data = {
         cbse: "Focus on NCERT + JEE/NEET.",
-        icse: "Strong fundamentals, good for competitive exams.",
-        state: "Prepare for board + entrance exams."
+        icse: "Strong fundamentals, good for exams.",
+        state: "Board + extra entrance prep needed.",
+        iit: "Top tier: focus on coding + internships.",
+        nit: "Core + internships important.",
+        vit: "Projects + placements focus.",
+        srm: "Build strong portfolio."
     };
 
-    result.innerHTML = `<h2>${input.toUpperCase()}</h2><p>${boards[input]}</p>`;
-}
-
-    // COLLEGE LOGIC
-    else if (selectedLevel === "ug") {
-
-        if (input.includes("iit")) {
-            result.innerHTML = "<h2>IIT Student</h2><p>Focus on internships, coding, and placements.</p>";
-        } 
-        else if (input.includes("arts")) {
-            result.innerHTML = "<h2>Arts College</h2><p>Explore UPSC, MBA, or specialization.</p>";
-        } 
-        else {
-            result.innerHTML = "<h2>UG Student</h2><p>Build skills, internships, and networking.</p>";
-        }
-    }
-
-    else if (selectedLevel === "pg") {
-        result.innerHTML = "<h2>Postgraduate</h2><p>Focus on specialization, research, or job placement.</p>";
-    }
+    result.innerHTML = `<h2>${input.toUpperCase()}</h2><p>${data[input]}</p>`;
 }
 
 </script>
