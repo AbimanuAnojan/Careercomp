@@ -12,34 +12,33 @@
 </header>
 
 <!-- STEP 1 -->
-<div id="step1">
-    <h2>Select Your Level</h2>
+<div class="container">
 
-    <select id="level">
-        <option value="">--Choose--</option>
-        <option value="10">10th</option>
-        <option value="11">11th</option>
-        <option value="12">12th</option>
-        <option value="ug">UG</option>
-        <option value="pg">PG</option>
-    </select>
+    <div class="card" id="step1">
+        <h2>Select Your Level</h2>
 
-    <br><br>
-    <button onclick="nextStep()">Next</button>
+        <select id="level">
+            <option value="">--Choose--</option>
+            <option value="10">10th</option>
+            <option value="11">11th</option>
+            <option value="12">12th</option>
+            <option value="ug">UG</option>
+            <option value="pg">PG</option>
+        </select>
+
+        <button onclick="nextStep()">Next</button>
+    </div>
+
+    <div class="card" id="step2" style="display:none;">
+        <h2 id="dynamicQuestion"></h2>
+
+        <select id="extraInput"></select>
+
+        <button onclick="showResult()">Get Guidance</button>
+    </div>
+
 </div>
 
-<!-- STEP 2 -->
-<div id="step2" style="display:none;">
-    <h2 id="dynamicQuestion"></h2>
-
-    <!-- dropdown will change dynamically -->
-    <select id="extraInput"></select>
-
-    <br><br>
-    <button onclick="showResult()">Get Guidance</button>
-</div>
-
-<!-- RESULT -->
 <div id="result"></div>
 
 <script>
